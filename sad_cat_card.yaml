@@ -1,0 +1,17 @@
+type: markdown
+content: |-
+  # Sad Cats Alert!
+
+  ## Litter Box Dirty!!!
+
+  ![Image](/local/cat.png)
+style: |
+  @keyframes blink {
+    50% {
+      background: red;
+    }
+  }
+  ha-card {
+    animation: blink 2s linear infinite;
+    zoom: 200%;
+  }

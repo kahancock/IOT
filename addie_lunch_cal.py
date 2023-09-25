@@ -2,6 +2,7 @@ from selenium.webdriver import Chrome
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 import time
+import re
 
 from selenium import webdriver
 
@@ -30,27 +31,26 @@ try:
     # Optionally, you can wait for a few seconds to allow the page to load
     #driver.implicitly_wait(50)
 
-    # Find all h3 elements on the page
-    h3_elements = driver.find_elements(By.CLASS_NAME, "menuday")
-    menu_elements = driver.find_elements(By.CLASS_NAME, "sc-cSHVUG.fyanpg")
+    elements = driver.find_elements(By.XPATH, "//div[@tabindex=0]")
 
     # Create an empty list to store the text from elements
     h3_texts = []
     menu_items = []
    
-    # Loop through each h3 element and store its text in the list
-    for h3 in h3_elements:
-        date = h3.text
+    # Loop through each h3 element and store ibts text in the list
+    for element in elements:
+
+        date = element.find_element(By.CLASS_NAME, "menuday").text
         date = date.replace('Menu:', '')
-        h3_texts.append(date)
         print (date)
-        print ((h3.find_element(By.CLASS_NAME, ".sc-cSHVUG.fyanpg")).text)
+        menu = element.find_element(By.CLASS_NAME, "sc-cSHVUG.fyanpg").text
+        menu =re.sub("\(.*?\)","()",menu)
+        menu = menu.replace('(','')
+        menu = menu.replace(')','')
+        menu = menu.replace('\n\n', '\n')
+        menu = menu.replace('\n\n', '\n')
+        print (menu)
 
-    #for menu in menu_elements:
-    #    menu_items.append(menu.text)
-
-    #print(h3_texts)
-    #print(menu_items)
 
 finally:
     # Close the WebDriver
